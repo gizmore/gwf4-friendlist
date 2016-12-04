@@ -3,6 +3,16 @@ $lang = array(
 'module_name' => 'Friendlist',	
 '' => '',
 
+##############
+### Config ###
+##############
+'cfg_guest_friendships' => 'Allow guest friendships?',
+'cfg_friendship_friends_quota_count' => 'Max number of friends',
+'cfg_friendship_request_quota_count' => 'Max number of pending requests',
+'cfg_friendship_cleanup_timeout' => 'Max cleanup age',
+'cfg_friendship_request_quota_time' => 'Max request age',
+'' => '',
+		
 ###############
 ### Sidebar ###
 ###############
