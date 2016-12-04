@@ -122,14 +122,20 @@ final class Friendlist_Request extends GWF_Method
 		$request = new GWF_FriendRequest(array(
 			'frq_id' => '0',
 			'frq_user_id' => $this->user->getID(),
+			'frq_relation' => 'friend',
 			'frq_friend_id' => $this->to->getID(),
-			'frq_token' => GWF_Random::randomKey(8),
+			'frq_token' => null,
 			'frq_opened_at' => GWF_Time::getDate(),
 			'frq_state' => 'open',
 			'frq_closed_at' => null,
 		));
 		
 		if (!$request->insert())
+		{
+			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
+		}
+		
+		if (!$request->generateToken())
 		{
 			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
 		}

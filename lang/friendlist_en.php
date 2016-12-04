@@ -51,6 +51,20 @@ $lang = array(
 ##############
 ### Accept ###
 ##############
+'msg_accepted' => 'You and %s are now friends.',
 '' => '',
+'request_mail_subject' => GWF_SITENAME.': Friendship accepted',
+'request_mail_body' =>
+'Dear %2$s'.PHP_EOL.
+''.PHP_EOL.
+'You and %3$s are now friends on %4$.'.PHP_EOL.
+''.PHP_EOL.
+'To view their profile, visit %5$s'.PHP_EOL.
+''.PHP_EOL.
+''.PHP_EOL.
+'Sincerly,'.PHP_EOL.
+'The %1$s Team'.PHP_EOL,
+		
+
 '' => '',
 );
