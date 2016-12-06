@@ -43,6 +43,7 @@ final class Friendlist_Request extends GWF_Method
 		$form = $this->form();
 		$tVars = array(
 			'form' => $form->templateY($this->module->lang('ft_request')),
+			'href_overview' => GWF_WEB_ROOT.'friends',
 		);
 		return $this->module->template('request.php', $tVars);
 	}
@@ -175,6 +176,8 @@ final class Friendlist_Request extends GWF_Method
 		$linkAccept = GWF_HTML::anchor($linkAccept, $linkAccept);
 		$linkAbuse = sprintf('mailto:%s', GWF_SUPPORT_EMAIL);
 		$linkAbuse = GWF_HTML::anchor($linkAbuse, $linkAbuse);
+		$linkSite = Common::getAbsoluteURL('');
+		$linkSite = GWF_HTML::anchor($linkSite, $linkSite);
 		$args = array(
 			GWF_SITENAME,
 			$this->user->displayName(),
@@ -182,6 +185,7 @@ final class Friendlist_Request extends GWF_Method
 			$linkProfile,
 			$linkAccept,
 			$linkAbuse,
+			$linkSite,
 		);
 		$body  = $this->module->lang('request_mail_body', $args);
 		$mail->setBody($body);

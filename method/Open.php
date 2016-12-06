@@ -16,7 +16,7 @@ final class Friendlist_Open extends GWF_Method
 
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^friendrequests$ index.php?mo=Friendlist&me=Open [QSA]'.PHP_EOL;
+		return 'RewriteRule ^friend_requests$ index.php?mo=Friendlist&me=Open [QSA]'.PHP_EOL;
 	}
 
 	public function execute()

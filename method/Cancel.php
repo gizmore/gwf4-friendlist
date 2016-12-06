@@ -12,16 +12,19 @@ final class Friendlist_Cancel extends GWF_Method
 	
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^cancel_friendship/([^/]+)/?$ index.php?mo=Friendlist&me=Cance&username=$1 [QSA]'.PHP_EOL;
+		return 'RewriteRule ^quit_friendship/([^/]+)/?$ index.php?mo=Friendlist&me=Cancel&username=$1 [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()
 	{
 		$this->user = GWF_User::getStaticOrGuest();
 		
-		if ($this->user->isUest())
+		if (!$this->user->isUser())
+		{
+			return GWF_HTML::err('ERR_NO_PERMISSION');
+		}
 		
-		if (false === ($this->friend = GWF_User::getByName(Common::getRequestString('usename'))))
+		if (false === ($this->friend = GWF_User::getByName(Common::getRequestString('username'))))
 		{
 			return GWF_HTML::err('ERR_UNKNOWN_USER');
 		}
@@ -41,8 +44,8 @@ final class Friendlist_Cancel extends GWF_Method
 	{
 		$data = array();
 		$data['username'] = array(GWF_Form::SSTRING, $this->friend->displayName(), $this->module->lang('th_user_name'));
-		$date['are_friends'] = array(GWF_Form::VALIDATOR);
-		$data['cancel'] = array(GWF_Form::SUBMIT, $this->module->lang('btn_cancel'));
+		$data['are_friends'] = array(GWF_Form::VALIDATOR);
+		$data['cancel'] = array(GWF_Form::SUBMIT, $this->module->lang('btn_quit'));
 		return new GWF_Form($this, $data);
 	}
 	
@@ -62,7 +65,7 @@ final class Friendlist_Cancel extends GWF_Method
 	{
 		$form = $this->form();
 		$tVars = array(
-			'form' => $form->templateY($this->module->lang('ft_cancel')),	
+			'form' => $form->templateY($this->module->lang('ft_cancel', array($this->friend->displayName()))),	
 		);
 		return $this->module->template('cancel.php', $tVars);
 	}
@@ -77,19 +80,18 @@ final class Friendlist_Cancel extends GWF_Method
 		{
 			return $error . $this->templateCancel();
 		}
-		
+
 		if (!$this->cancelFriendship($this->user, $this->friend, $this->friendship))
 		{
 			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
 		}
 		
-		$withEmail = $this->module->cfgABC();
-		if ($withEmail)
+		if ($this->module->cfgAcceptByMail())
 		{
 			$this->sendMail($this->user, $this->friend, $this->friendship);
 		}
 		
-		return $this->module->message('msg_canceled', array($this->friend->displayName()));
+		return $this->module->message('msg_friendship_canceled', array($this->friend->displayName(), GWF_SITENAME));
 	}
 	
 	private function cancelFriendship(GWF_User $user, GWF_User $friend, GWF_Friendship $friendship)
@@ -100,37 +102,32 @@ final class Friendlist_Cancel extends GWF_Method
 	############
 	### Mail ###
 	############
-	private function sendMail(GWF_FriendRequest $request)
+	private function sendMail(GWF_User $user, GWF_User $friend, GWF_Friendship $friendship)
 	{
-		if ($email = ($this->to->getValidMail()))
+		if ($email = ($friend->getValidMail()))
 		{
-			$this->sendMailB($request, $email);
+			$this->sendMailB($user, $friend, $email, $friendship);
 		}
 	}
 	
-	private function sendMailB(GWF_FriendRequest $request, $email)
+	private function sendMailB(GWF_User $user, GWF_User $friend, $email, GWF_Friendship $friendship)
 	{
-		$mail = new GWF_Mail();
-		$mail->setSender(GWF_BOT_EMAIL);
-		$mail->setSubject($this->module->lang('request_mail_subject'));
+		$linkSite = Common::getAbsoluteURL('');
+		$linkSite = GWF_HTML::anchor($linkSite, $linkSite);
 		$linkProfile = Common::getAbsoluteURL('profile/'.$this->user->getName());
 		$linkProfile = GWF_HTML::anchor($linkProfile, $linkProfile);
-		$linkAccept = Common::getAbsoluteURL('frindrequest_accept/'.$request->getToken());
-		$linkAccept = GWF_HTML::anchor($linkAccept, $linkAccept);
-		$linkAbuse = sprintf('mailto:%s', GWF_SUPPORT_EMAIL);
-		$linkAbuse = GWF_HTML::anchor($linkAbuse, $linkAbuse);
 		$args = array(
-				GWF_SITENAME,
-				$this->user->displayName(),
-				$this->to->displayName(),
-				$linkProfile,
-				$linkAccept,
-				$linkAbuse,
+			GWF_SITENAME,
+			$friend->displayName(),
+			$user->displayName(),
+			$linkSite,
+			$linkProfile,
 		);
-		$body  = $this->module->lang('request_mail_body', $args);
+		$mail = new GWF_Mail();
+		$body  = $this->module->lang('cancel_mail_body', $args);
+		$mail->setSender(GWF_BOT_EMAIL);
+		$mail->setSubject($this->module->lang('cancel_mail_subject'));
 		$mail->setBody($body);
-		$mail->sendToUser($this->to);
+		$mail->sendToUser($this->friend);
 	}
-	
-	
 }

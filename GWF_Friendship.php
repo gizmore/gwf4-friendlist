@@ -82,6 +82,7 @@ final class GWF_Friendship extends GDO
 	############
 	### HREF ###
 	############
+	public function hrefCancel() { return GWF_WEB_ROOT.'quit_friendship/'.$this->getVar('user_name'); }
 	public function hrefProfile() { return GWF_WEB_ROOT.'profile/'.$this->getVar('user_name'); }
 	
 	###############

@@ -27,6 +27,7 @@ $lang = array(
 'btn_request_general' => 'Add a friend',
 'btn_open_requests' => 'Friendship requests',
 'btn_accept' => 'Accept',
+'btn_deny' => 'Deny',
 'btn_quit' => 'Quit Friendship',
 
 ###############
@@ -47,7 +48,7 @@ $lang = array(
 'request_mail_body' =>
 	'Dear %3$s'.PHP_EOL.
 	''.PHP_EOL.
-	'%2$s requested to become friends with you on %1$s'.PHP_EOL.
+	'%2$s requested to become friends with you on %7$s'.PHP_EOL.
 	''.PHP_EOL.
 	'To view their profile, visit %4$s'.PHP_EOL.
 	''.PHP_EOL.
@@ -69,7 +70,7 @@ $lang = array(
 'accept_mail_body' =>
 'Dear %2$s'.PHP_EOL.
 ''.PHP_EOL.
-'You and %3$s are now friends on %4$.'.PHP_EOL.
+'You and %3$s are now friends on %4$s.'.PHP_EOL.
 ''.PHP_EOL.
 'To view their profile, visit %5$s'.PHP_EOL.
 ''.PHP_EOL.
@@ -85,7 +86,7 @@ $lang = array(
 'deny_mail_body' =>
 'Dear %2$s'.PHP_EOL.
 ''.PHP_EOL.
-'%3$s has denied your friendship request on %4$.'.PHP_EOL.
+'%3$s has denied your friendship request on %4$s.'.PHP_EOL.
 ''.PHP_EOL.
 'To view their profile, visit %5$s'.PHP_EOL.
 ''.PHP_EOL.
@@ -96,13 +97,14 @@ $lang = array(
 ##############
 ### Cancel ###
 ##############
+'ft_cancel' => 'Quit friendship with %s',
 'err_not_friends' => 'You and % are not friends on %s.',
 'msg_friendship_canceled' => 'You and % are not friends on %s anymore.',
 'cancel_mail_subject' => GWF_SITENAME.': Friendship cancelled',
 'cancel_mail_body' =>
 'Dear %2$s'.PHP_EOL.
 ''.PHP_EOL.
-'%3$s has cancelled your friendship on %4$.'.PHP_EOL.
+'%3$s has cancelled the friendship on %4$s with you.'.PHP_EOL.
 ''.PHP_EOL.
 'To view their profile, visit %5$s'.PHP_EOL.
 ''.PHP_EOL.
