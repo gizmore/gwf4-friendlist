@@ -69,7 +69,8 @@ final class GWF_Friendship extends GDO
 	###############
 	public function displayFriendName()
 	{
-		return $this->getFriendID();
+		$guestName = $this->getVar('user_guest_name');
+		return $guestName ? $guestName : $this->getVar('user_name');
 	}
 	
 	public function displayRelation()

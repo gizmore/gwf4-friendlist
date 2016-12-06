@@ -16,6 +16,7 @@ $lang = array(
 ###############
 ### Sidebar ###
 ###############
+'btn_more' => 'more…',
 '' => '',
 		
 ################
@@ -61,8 +62,7 @@ $lang = array(
 	''.PHP_EOL.
 	'Sincerly,'.PHP_EOL.
 	'The %1$s Team'.PHP_EOL,
-		
-		
+
 ##############
 ### Accept ###
 ##############
@@ -79,7 +79,24 @@ $lang = array(
 ''.PHP_EOL.
 'Sincerly,'.PHP_EOL.
 'The %1$s Team'.PHP_EOL,
-		
-
 '' => '',
+
+##############
+### Accept ###
+##############
+'msg_denied' => 'You have denied the friendship request from %s.',
+'' => '',
+'deny_mail_subject' => GWF_SITENAME.': Friendship request denied',
+'deny_mail_body' =>
+'Dear %2$s'.PHP_EOL.
+''.PHP_EOL.
+'%3$s has denied your friendship request on %4$.'.PHP_EOL.
+''.PHP_EOL.
+'To view their profile, visit %5$s'.PHP_EOL.
+''.PHP_EOL.
+''.PHP_EOL.
+'Sincerly,'.PHP_EOL.
+'The %1$s Team'.PHP_EOL,
+'' => '',
+
 );

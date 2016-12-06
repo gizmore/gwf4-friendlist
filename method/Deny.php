@@ -1,5 +1,5 @@
 <?php
-final class Friendlist_Accept extends GWF_Method
+final class Friendlist_Deny extends GWF_Method
 {
 	private $user;
 	private $friend;
@@ -9,7 +9,7 @@ final class Friendlist_Accept extends GWF_Method
 	
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^accept_friendship/([^/]+)/?$ index.php?mo=Friendlist&me=Accept&token=$1 [QSA]'.PHP_EOL;
+		return 'RewriteRule ^deny_friendship/([^/]+)/?$ index.php?mo=Friendlist&me=Deny&token=$1 [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()
@@ -37,14 +37,8 @@ final class Friendlist_Accept extends GWF_Method
 			return GWF_HTML::err('ERR_UNKNOWN_USER');
 		}
 		
-		# Insert two friends
-		if (!$this->insertFriendships($this->user, $this->friend, $this->request))
-		{
-			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
-		}
-		
 		# Invalidate request
-		if (!$this->acceptRequest($this->request))
+		if (!$this->denyRequest($this->request))
 		{
 			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
 		}
@@ -58,38 +52,12 @@ final class Friendlist_Accept extends GWF_Method
 		return $this->module->message('msg_accepted', array($this->user->displayName()));
 	}
 	
-	private function acceptRequest(GWF_FriendRequest $request)
+	private function denyRequest(GWF_FriendRequest $request)
 	{
 		return $request->saveVars(array(
-			'frq_state' => 'accepted',
+			'frq_state' => 'denied',
 			'frq_closed_at' => GWF_Time::getDate(),
 		));
-	}
-	
-	private function insertFriendships(GWF_User $user, GWF_User $friend, GWF_FriendRequest $request)
-	{
-		if (GWF_Friend::areFriends($user, $friend))
-		{
-			return false;
-		}
-		$now = GWF_Time::getDate();
-		$a = new GWF_Friendship(array(
-			'fr_id' => '0',
-			'fr_user_id' => $user->getID(),
-			'fr_friend_id' => $friend->getID(),
-			'fr_relation' => $request->getRelation(),
-			'fr_since' => $now,
-			'fr_saved_at' => $now,
-		));
-		$b = new GWF_Friendship(array(
-			'fr_id' => '0',
-			'fr_user_id' => $friend->getID(),
-			'fr_friend_id' => $user->getID(),
-			'fr_relation' => 'friend',
-			'fr_since' => $now,
-			'fr_saved_at' => $now,
-		));
-		return $a->insert() && $b->insert();
 	}
 	
 	private function sendMail(GWF_User $user, GWF_User $friend, GWF_FriendRequest $request)
@@ -104,7 +72,7 @@ final class Friendlist_Accept extends GWF_Method
 	{
 		$mail = new GWF_Mail();
 		$mail->setSender(GWF_BOT_EMAIL);
-		$mail->setSubject($this->module->lang('accept_mail_subject'));
+		$mail->setSubject($this->module->lang('deny_mail_subject'));
 		$linkSite = Common::getAbsoluteURL('');
 		$linkSite = GWF_HTML::anchor($linkSite, $linkSite);
 		$linkProfile = Common::getAbsoluteURL('profile/'.$friend->getName());
@@ -116,7 +84,7 @@ final class Friendlist_Accept extends GWF_Method
 			$linkSite,
 			$linkProfile,
 		);
-		$body  = $this->module->lang('accept_mail_body', $args);
+		$body  = $this->module->lang('deny_mail_body', $args);
 		$mail->setBody($body);
 		$mail->sendToUser($user);
 	}
