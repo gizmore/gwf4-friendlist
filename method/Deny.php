@@ -19,7 +19,7 @@ final class Friendlist_Deny extends GWF_Method
 		
 		if ( (!$this->friend->isUser()) || ((!$this->allowGuests)&&($this->friend->isGuest())) )
 		{
-			return GWF_HTML::err('ERR_PERMISSION');
+			return GWF_HTML::err('ERR_NO_PERMISSION');
 		}
 		
 		# Get request

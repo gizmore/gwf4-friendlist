@@ -171,7 +171,7 @@ final class Friendlist_Request extends GWF_Method
 		$mail->setSubject($this->module->lang('request_mail_subject'));
 		$linkProfile = Common::getAbsoluteURL('profile/'.$this->user->getName());
 		$linkProfile = GWF_HTML::anchor($linkProfile, $linkProfile);
-		$linkAccept = Common::getAbsoluteURL('frindrequest_accept/'.$request->getToken());
+		$linkAccept = Common::getAbsoluteURL('accept_friendship/'.$request->getToken());
 		$linkAccept = GWF_HTML::anchor($linkAccept, $linkAccept);
 		$linkAbuse = sprintf('mailto:%s', GWF_SUPPORT_EMAIL);
 		$linkAbuse = GWF_HTML::anchor($linkAbuse, $linkAbuse);

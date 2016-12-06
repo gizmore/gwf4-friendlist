@@ -40,10 +40,8 @@ final class GWF_FriendRequest extends GDO
 	############
 	### HREF ###
 	############
-	public function hrefAccept()
-	{
-		return GWF_WEB_ROOT.'accept_friendship/'.$this->getToken();
-	}
+	public function hrefDeny() { return GWF_WEB_ROOT.'deny_friendship/'.$this->getToken(); }
+	public function hrefAccept() { return GWF_WEB_ROOT.'accept_friendship/'.$this->getToken(); }
 	
 	#############
 	### Token ###
@@ -86,6 +84,13 @@ final class GWF_FriendRequest extends GDO
 			$cut = GWF_Time::getDate(GWF_Date::LEN_SECOND, time()-$quotaTime);
 			$where .= " AND frq_opened_at>='$cut'";
 		}
+		return self::table(__CLASS__)->countRows($where);
+	}
+	
+	public static function countRequestsFor(GWF_User $user)
+	{
+		$uid = $user->getID();
+		$where = "frq_friend_id=$uid AND frq_state='open'";
 		return self::table(__CLASS__)->countRows($where);
 	}
 	

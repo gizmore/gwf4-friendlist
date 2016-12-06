@@ -19,7 +19,7 @@ final class Friendlist_Accept extends GWF_Method
 		
 		if ( (!$this->friend->isUser()) || ((!$this->allowGuests)&&($this->friend->isGuest())) )
 		{
-			return GWF_HTML::err('ERR_PERMISSION');
+			return GWF_HTML::err('ERR_NO_PERMISSION');
 		}
 		
 		# Get request
@@ -68,7 +68,7 @@ final class Friendlist_Accept extends GWF_Method
 	
 	private function insertFriendships(GWF_User $user, GWF_User $friend, GWF_FriendRequest $request)
 	{
-		if (GWF_Friend::areFriends($user, $friend))
+		if (GWF_Friendship::areFriends($user, $friend))
 		{
 			return false;
 		}

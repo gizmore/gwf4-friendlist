@@ -54,6 +54,21 @@ final class GWF_Friendship extends GDO
 		return self::table(__CLASS__)->selectVar('fr_relation', $where);
 	}
 	
+	public static function getFriendshipFor(GWF_User $user, GWF_User $friend)
+	{
+		$where = sprintf("fr_user_id=%s AND fr_friend_id=%s", $user->getID(), $friend->getID());
+		return self::table(__CLASS__)->selectFirstObject('*', $where);
+	}
+	
+	public static function getFriendsFor(GWF_User $user, $limit=-1, $from=-1)
+	{
+		$fields = '*, friend.*';
+		$joins = array('friend');
+		$where = sprintf("fr_user_id=%s", $user->getID());
+		$orderby = 'fr_since ASC';
+		return self::table(__CLASS__)->select($fields, $where, $orderby, $joins, $limit, $from);
+	}
+	
 	##############
 	### Getter ###
 	##############
@@ -64,6 +79,11 @@ final class GWF_Friendship extends GDO
 	public function getSince() { return $this->getVar('fr_since'); }
 	public function getSavedAt() { return $this->getVar('fr_saved_at'); }
 	
+	############
+	### HREF ###
+	############
+	public function hrefProfile() { return GWF_WEB_ROOT.'profile/'.$this->getVar('user_name'); }
+	
 	###############
 	### Display ###
 	###############
@@ -71,6 +91,11 @@ final class GWF_Friendship extends GDO
 	{
 		$guestName = $this->getVar('user_guest_name');
 		return $guestName ? $guestName : $this->getVar('user_name');
+	}
+	
+	public function displayFriendProfileLink()
+	{
+		return GWF_HTML::anchor($this->hrefProfile(), $this->displayFriendName());
 	}
 	
 	public function displayRelation()

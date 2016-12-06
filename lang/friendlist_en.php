@@ -1,7 +1,6 @@
 <?php
 $lang = array(
 'module_name' => 'Friendlist',	
-'' => '',
 
 ##############
 ### Config ###
@@ -11,13 +10,12 @@ $lang = array(
 'cfg_friendship_request_quota_count' => 'Max number of pending requests',
 'cfg_friendship_cleanup_timeout' => 'Max cleanup age',
 'cfg_friendship_request_quota_time' => 'Max request age',
-'' => '',
 		
 ###############
 ### Sidebar ###
 ###############
 'btn_more' => 'more…',
-'' => '',
+'btn_num_open_requests' => '%d Friendship request(s)',
 		
 ################
 ### Overview ###
@@ -29,6 +27,7 @@ $lang = array(
 'btn_request_general' => 'Add a friend',
 'btn_open_requests' => 'Friendship requests',
 'btn_accept' => 'Accept',
+'btn_quit' => 'Quit Friendship',
 
 ###############
 ### Request ###
@@ -44,7 +43,6 @@ $lang = array(
 'err_already_requesting' => 'You already have a pending request to %s.',
 'err_already_requested' => 'There is already a pending request from %s.',
 'msg_requested' => 'Your friendship has been requested.',
-'' => '',
 'request_mail_subject' => GWF_SITENAME.': Friendship Request',
 'request_mail_body' =>
 	'Dear %3$s'.PHP_EOL.
@@ -67,7 +65,6 @@ $lang = array(
 ### Accept ###
 ##############
 'msg_accepted' => 'You and %s are now friends.',
-'' => '',
 'accept_mail_subject' => GWF_SITENAME.': Friendship accepted',
 'accept_mail_body' =>
 'Dear %2$s'.PHP_EOL.
@@ -79,13 +76,11 @@ $lang = array(
 ''.PHP_EOL.
 'Sincerly,'.PHP_EOL.
 'The %1$s Team'.PHP_EOL,
-'' => '',
 
 ##############
 ### Accept ###
 ##############
 'msg_denied' => 'You have denied the friendship request from %s.',
-'' => '',
 'deny_mail_subject' => GWF_SITENAME.': Friendship request denied',
 'deny_mail_body' =>
 'Dear %2$s'.PHP_EOL.
@@ -97,6 +92,21 @@ $lang = array(
 ''.PHP_EOL.
 'Sincerly,'.PHP_EOL.
 'The %1$s Team'.PHP_EOL,
-'' => '',
-
+		
+##############
+### Cancel ###
+##############
+'err_not_friends' => 'You and % are not friends on %s.',
+'msg_friendship_canceled' => 'You and % are not friends on %s anymore.',
+'cancel_mail_subject' => GWF_SITENAME.': Friendship cancelled',
+'cancel_mail_body' =>
+'Dear %2$s'.PHP_EOL.
+''.PHP_EOL.
+'%3$s has cancelled your friendship on %4$.'.PHP_EOL.
+''.PHP_EOL.
+'To view their profile, visit %5$s'.PHP_EOL.
+''.PHP_EOL.
+''.PHP_EOL.
+'Sincerly,'.PHP_EOL.
+'The %1$s Team'.PHP_EOL,
 );
