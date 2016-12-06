@@ -28,9 +28,14 @@ final class GWF_FriendRequest extends GDO
 	###############
 	### Getters ###
 	###############
+	public function getID() { return $this->getVar('frq_id'); }
+	public function getUserID() { return $this->getVar('frq_user_id'); }
 	public function getRelation() { return $this->getVar('frq_relation'); }
+	public function getFriendID() { return $this->getVar('frq_friend_id'); }
 	public function getToken() { return $this->getVar('frq_token'); }
 	public function getOpenedAt() { return $this->getVar('frq_opened_at'); }
+	public function getState() { return $this->getVar('frq_state'); }
+	public function getClosedAt() { return $this->getVar('frq_closed_at'); }
 	
 	############
 	### HREF ###
@@ -82,6 +87,14 @@ final class GWF_FriendRequest extends GDO
 			$where .= " AND frq_opened_at>='$cut'";
 		}
 		return self::table(__CLASS__)->countRows($where);
+	}
+	
+	public static function hasPendingRequest(GWF_User $user, GWF_User $friend)
+	{
+		$uid = $user->getID();
+		$fid = $friend->getID();
+		$where = "frq_user_id=$uid AND frq_friend_id=$fid AND frq_state='open'";
+		return self::table(__CLASS__)->countRows($where) > 0;
 	}
 	
 	###############

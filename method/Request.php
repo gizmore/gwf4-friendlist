@@ -106,6 +106,14 @@ final class Friendlist_Request extends GWF_Method
 			{
 				return $this->module->lang('err_already_friends', array($this->to->displayName()));
 			}
+			if (GWF_FriendRequest::hasPendingRequest($this->user, $this->to))
+			{
+				return $this->module->lang('err_already_requesting', array($this->to->displayName()));
+			}
+			if (GWF_FriendRequest::hasPendingRequest($this->to, $this->user))
+			{
+				return $this->module->lang('err_already_requested', array($this->to->displayName()));
+			}
 		}
 		return false;
 	}

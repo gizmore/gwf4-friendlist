@@ -26,6 +26,7 @@ $lang = array(
 'th_opened_at' => 'Date',
 'th_since' => 'Since',
 'btn_request_general' => 'Add a friend',
+'btn_open_requests' => 'Friendship requests',
 'btn_accept' => 'Accept',
 
 ###############
@@ -39,6 +40,8 @@ $lang = array(
 'err_already_friends' => 'You and %s are already friends.',
 'err_self_friendship' => 'You cannot be friend with yourself here.',
 'err_only_real_users' => 'You can only be friend with human users.',
+'err_already_requesting' => 'You already have a pending request to %s.',
+'err_already_requested' => 'There is already a pending request from %s.',
 'msg_requested' => 'Your friendship has been requested.',
 '' => '',
 'request_mail_subject' => GWF_SITENAME.': Friendship Request',

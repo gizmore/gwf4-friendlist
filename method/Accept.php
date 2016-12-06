@@ -43,8 +43,14 @@ final class Friendlist_Accept extends GWF_Method
 			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
 		}
 		
+		# Invalidate request
+		if (!$this->acceptRequest($this->request))
+		{
+			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
+		}
+		
 		# Send mails
-		if ($this->module->cfgEmail())
+		if ($this->module->cfgAcceptByMail())
 		{
 			$this->sendMail($this->user, $this->friend, $this->request);
 		}
@@ -52,7 +58,15 @@ final class Friendlist_Accept extends GWF_Method
 		return $this->module->message('msg_accepted', array($this->user->displayName()));
 	}
 	
-	public function insertFriendships(GWF_User $user, GWF_User $friend, GWF_FriendRequest $request)
+	private function acceptRequest(GWF_FriendRequest $request)
+	{
+		return $request->saveVars(array(
+			'frq_state' => 'accepted',
+			'frq_closed_at' => GWF_Time::getDate(),
+		));
+	}
+	
+	private function insertFriendships(GWF_User $user, GWF_User $friend, GWF_FriendRequest $request)
 	{
 		$now = GWF_Time::getDate();
 		$a = new GWF_Friendship(array(
