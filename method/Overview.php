@@ -62,6 +62,7 @@ final class Friendlist_Overview extends GWF_Method
 			'sort_url' => $hrefSort,
 			'page_menu' => GWF_PageMenu::display($this->page, $this->nPages, $hrefPage),
 			'href_request' => GWF_WEB_ROOT.'friendship_request',
+			'href_open_requests' => GWF_WEB_ROOT.'friendrequests',
 		);
 		return $this->module->template('overview.php', $tVars);
 	}

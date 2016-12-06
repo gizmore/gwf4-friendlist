@@ -9,9 +9,7 @@ final class Friendlist_Accept extends GWF_Method
 	
 	public function getHTAccess()
 	{
-		return
-			'RewriteRule ^friendship_accept/?$ index.php?mo=Friendlist&me=Accept [QSA]'.PHP_EOL.
-			'RewriteRule ^friendship_accept/([^/]+)/?$ index.php?mo=Friendlist&me=Accept&token=$1 [QSA]'.PHP_EOL;
+		return 'RewriteRule ^accept_friendship/([^/]+)/?$ index.php?mo=Friendlist&me=Accept&token=$1 [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()
@@ -24,15 +22,8 @@ final class Friendlist_Accept extends GWF_Method
 			return GWF_HTML::err('ERR_PERMISSION');
 		}
 		
-		# Get request either way
-		if ($token = Common::getRequestString('token'))
-		{
-			$this->request = GWF_FriendRequest::getByToken($token);
-		}
-		else if ($id = Common::getRequestString('id'))
-		{
-			$this->request = GWF_FriendRequest::getByID($id);
-		}
+		# Get request
+		$this->request = GWF_FriendRequest::getByToken(Common::getRequestString('token'));
 
 		# Check ownage of target
 		if ( (!$this->request) || ($this->request->getFriendID() !== $this->friend->getID()) )

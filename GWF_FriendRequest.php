@@ -28,7 +28,17 @@ final class GWF_FriendRequest extends GDO
 	###############
 	### Getters ###
 	###############
+	public function getRelation() { return $this->getVar('frq_relation'); }
 	public function getToken() { return $this->getVar('frq_token'); }
+	public function getOpenedAt() { return $this->getVar('frq_opened_at'); }
+	
+	############
+	### HREF ###
+	############
+	public function hrefAccept()
+	{
+		return GWF_WEB_ROOT.'accept_friendship/'.$this->getToken();
+	}
 	
 	#############
 	### Token ###
@@ -72,6 +82,31 @@ final class GWF_FriendRequest extends GDO
 			$where .= " AND frq_opened_at>='$cut'";
 		}
 		return self::table(__CLASS__)->countRows($where);
+	}
+	
+	###############
+	### Display ###
+	###############
+	public function displayUsername()
+	{
+		$guestname = $this->getVar('user_guest_name');
+		return $guestname ? $guestname : $this->getVar('user_name');
+	}
+	
+	public function displayFriendname()
+	{
+		$guestname = $this->getVar('user_guest_name');
+		return $guestname ? $guestname : $this->getVar('user_name');
+	}
+	
+	public function displayRelation()
+	{
+		return $this->getRelation();
+	}
+	
+	public function displayDate()
+	{
+		return GWF_Time::displayDate($this->getOpenedAt());
 	}
 	
 }

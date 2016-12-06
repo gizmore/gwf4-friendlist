@@ -23,8 +23,10 @@ $lang = array(
 ################
 'th_user_name' => 'User',
 'th_relation' => 'Relation',
+'th_opened_at' => 'Date',
 'th_since' => 'Since',
 'btn_request_general' => 'Add a friend',
+'btn_accept' => 'Accept',
 
 ###############
 ### Request ###
@@ -63,8 +65,8 @@ $lang = array(
 ##############
 'msg_accepted' => 'You and %s are now friends.',
 '' => '',
-'request_mail_subject' => GWF_SITENAME.': Friendship accepted',
-'request_mail_body' =>
+'accept_mail_subject' => GWF_SITENAME.': Friendship accepted',
+'accept_mail_body' =>
 'Dear %2$s'.PHP_EOL.
 ''.PHP_EOL.
 'You and %3$s are now friends on %4$.'.PHP_EOL.
